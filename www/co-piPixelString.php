@@ -76,6 +76,12 @@ function addPixelOutput()
 		protocol = 'apa102';
 		protocols = 'apa102,lpd6803,lpd8806';
 	}
+	else if (type == 'DTFieldPiHat')
+	{
+		portCount = 4;
+		protocol = 'ws281x';
+		protocols = 'ws281x';
+	}
 
 	str += '<b>' + type + ' Output</b><br>';
 	str += "Output Enabled: <input type='checkbox' id='" + type + "_Output_0_enable' checked><br>";
@@ -138,6 +144,13 @@ function populatePixelStringOutputs(data)
 
                 if (protocol == '')
                     protocol = 'ws2801';
+            }
+            else if (type == 'DTFieldPiHat')
+            {
+                protocols = 'ws281x';
+
+                if (protocol == '')
+                    protocol = 'ws281x';
             }
 
             str += "Output Enabled: <input type='checkbox' id='" + type + "_Output_0_enable'";
@@ -224,6 +237,7 @@ $(document).ready(function() {
 		<select id='pixelOutputType'>
 			<option value='RPIWS281X'>RPIWS281X</option>
 			<option value='spixels'>spixels</option>
+			<option value='DTFieldPiHat'>DT Field Pi Hat</option>
 <!--
 			<option value='SPI-WS2801'>SPI-WS2801</option>
 -->
