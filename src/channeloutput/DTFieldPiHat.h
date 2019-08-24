@@ -26,35 +26,37 @@
 #ifndef _DWABHAT_H
 #define _DWABHAT_H
 
+#define DT_HAT_MAX_CHANNELS (400 * 3)
+#define DT_HAT_NUM_PORTS 4
+
 #include "ChannelOutputBase.h"
 #include "PixelString.h"
 
 class DTPiHat : public ChannelOutputBase {
-  public:
-	DTPiHat(unsigned int startChannel, unsigned int channelCount);
-	~DTPiHat();
+	public:
+		DTPiHat(unsigned int startChannel, unsigned int channelCount);
+		~DTPiHat();
 
-    virtual int Init(Json::Value config) override;
-    
-	// Close the derived class.  This method must also call the
-	// base class Close() method.
-	int Close(void);
+		virtual int Init(Json::Value config) override;
 
-	// Main routine to send channel data out
-	int SendData(unsigned char *channelData);
+		// Close the derived class.  This method must also call the
+		// base class Close() method.
+		int Close(void);
 
-	// Dump the config variables for debugging.  This method must
-	// also call the base class DumpConfig() method.
-	void DumpConfig(void);
-    
-    virtual void GetRequiredChannelRange(int &min, int & max);
+		// Main routine to send channel data out
+		int SendData(unsigned char *channelData);
 
-  private:
-    int          m_i2c;
+		// Dump the config variables for debugging.  This method must
+		// also call the base class DumpConfig() method.
+		void DumpConfig(void);
 
-	int          m_pixels;
+		virtual void GetRequiredChannelRange(int &min, int & max);
 
-	std::vector<PixelString*> m_strings;
+	private:
+		unsigned char				m_buf[DT_HAT_MAX_CHANNELS + 1];
+		int							m_i2c;
+		int							m_pixels;
+		std::vector<PixelString*>	m_strings;
 
 };
 
